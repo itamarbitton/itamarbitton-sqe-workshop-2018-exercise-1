@@ -51,6 +51,7 @@ const test1Func =
         '}\n'+
        'return i;\n'+
     '}';
+
 const test1Res =
     [   {line: 1, type: 'FunctionDeclaration', name: 'test1', condition: '', value: ''},
         {line: 1, type: 'VariableDeclaration', name: 'x', condition: '', value: ''},
@@ -197,6 +198,7 @@ const test9Res =
         {line: 7, type: 'IfStatement', name: '', condition: 'x % 2 === 0', value: ''},
         {line: 8, type: 'ReturnStatement', name: '', condition: '', value: 'even'},
         {line: 9, type: 'ReturnStatement', name: '', condition: '', value: 'odd'}];
+
 const test10Func =
     'function binarySearch(X, V, n){\n' +
         'let low, high, mid;\n' +
