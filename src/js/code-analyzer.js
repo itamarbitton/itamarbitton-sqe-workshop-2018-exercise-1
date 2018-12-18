@@ -1,5 +1,5 @@
 import * as esprima from 'esprima';
-
+import * as escodegen from 'escodegen';
 
 const parseCode = (codeToParse) => {return esprima.parseScript(codeToParse,{ loc: true, range:true });};
 
@@ -7,6 +7,10 @@ const generateTableRow = (line, type, name='', condition='', value='') => {
     return {line: line, type: type, name: name, condition: condition, value: value};
 };
 
+
+function generateExpression(parsedCode){
+    return escodegen.generate(parsedCode);
+}
 
 function generateParametersRows(paramsCode){
     let ans = [];
@@ -177,14 +181,13 @@ function generateUpdateExpressionRows(updateCode){
 function generateForStatementRows(forCode){
     const line = forCode.loc.start.line;
     const type = 'ForStatement';
-    let init = generateTable(forCode.init);
-    init = '' + init.name + '=' + init.value;
+    let init = generateExpression(forCode.init);
     let test = generateTable(forCode.test);
     const update = forCode.update.type === 'UpdateExpression' ?
         generateTable(forCode.update).value :
         generateTable(forCode.update).name + ' = ' + generateTable(forCode.update).value;
     const body = generateTable(forCode.body);
-    const  condition = ''+ init + ' ; ' + test + ' ; ' + update ;
+    const  condition = ''+ init + test + ' ; ' + update ;
     return [].concat(generateTableRow(line, type, undefined, condition, undefined), body);
 }
 
@@ -224,25 +227,8 @@ function generateTable(parsedCode){
     case 'Program': return generateTable(parsedCode.body[0]);
     case 'ExpressionStatement':return generateTable(parsedCode.expression);
     default:
-        //return parsedCode;
         return mapping[parsedCode.type].call(undefined, parsedCode);
     }
 }
 
 export {parseCode, generateTable};
-
-
-// case 'VariableDeclaration':return generateVariableDeclarationRows(parsedCode); //
-// case 'BlockStatement':return generateBlockStatementRows(parsedCode); //
-// case 'FunctionDeclaration':return generateFunctionRows(parsedCode) ; //
-// case 'AssignmentExpression':return generateAssignmentExpressionRows(parsedCode); //
-// case 'BinaryExpression':return generateBinaryExpressionRows(parsedCode); //
-// case 'IfStatement':return generateIfStatementRows(parsedCode); //
-// case 'WhileStatement':return generateWhileStatementRows(parsedCode); //
-// case 'MemberExpression':return generateMemberExpressionRows(parsedCode); //
-// case 'UnaryExpression':return generateUnaryExpressionRows(parsedCode); //
-// case 'ReturnStatement':return generateReturnStatementRows(parsedCode); //
-// case 'UpdateExpression':return generateUpdateExpressionRows(parsedCode); //
-// case 'ForStatement':return generateForStatementRows(parsedCode); //
-// case 'ArrayExpression':return generateArrayExpressionRows(parsedCode);
-

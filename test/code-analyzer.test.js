@@ -130,7 +130,7 @@ const test5Res =
 const test6Func =
     'function test6(){\n' +
         'let check = 0, i,k;\n' +
-        'for(i=0; i<20; ++i){\n' +
+        'for(i=0;i<20; ++i){\n' +
             'check = check + 1;\n' +
         '}\n' +
         'for(k=0; k<20; k = k+1){\n' +
@@ -142,9 +142,9 @@ const test6Res =
         {line: 2, type: 'VariableDeclaration', name: 'check', condition: '', value: 0},
         {line: 2, type: 'VariableDeclaration', name: 'i', condition: '', value: null},
         {line: 2, type: 'VariableDeclaration', name: 'k', condition: '', value: null},
-        {line: 3, type: 'ForStatement', name: '', condition: 'i=0 ; i < 20 ; ++i', value: ''},
+        {line: 3, type: 'ForStatement', name: '', condition: 'i = 0i < 20 ; ++i', value: ''},
         {line: 4, type: 'AssignmentExpression', name: 'check', condition: '', value: 'check + 1'},
-        {line: 6, type: 'ForStatement', name: '', condition: 'k=0 ; k < 20 ; k = k + 1', value: ''},
+        {line: 6, type: 'ForStatement', name: '', condition: 'k = 0k < 20 ; k = k + 1', value: ''},
         {line: 7, type: 'AssignmentExpression', name: 'check', condition: '', value: 'check + 1'}];
 const test7Func = 'function test7(T,Y){\n' +
     'let one, two, three;\n' +
